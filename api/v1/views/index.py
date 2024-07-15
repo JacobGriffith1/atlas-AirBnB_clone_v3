@@ -10,7 +10,8 @@ def status():
     """Returns JSON status 'OK'"""
     return jsonify(status="OK")
 
-@app_views.route('/status', strict_slashes=False)
+
+@app_views.route('/status', strict_slashes=False, methods=['GET'])
 def stats():
     """Returns JSON count of each instance type"""
     return jsonify(amenities=storage.count("Amenity"),

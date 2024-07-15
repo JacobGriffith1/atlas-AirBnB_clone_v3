@@ -74,17 +74,9 @@ class FileStorage:
         Returns the object based on the class
         and its ID, or None if not found
         """
-        if isinstance(cls, str):
-            if cls in classes:
-                cls = classes[cls]
-            else:
-                print ("Class doesn't exist.")
-                return None
-
-        obj_search = self.all(cls).values()
-        for obj in obj_search:
-            if obj.id == id:
-                return obj
+        key = "{}.{}".format(cls, id)
+        if key in self.__objects.keys():
+            return self.__objects[key]
 
         return None
 

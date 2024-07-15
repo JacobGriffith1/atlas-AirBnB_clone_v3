@@ -101,4 +101,3 @@ class FileStorage:
                     print ("Class doesn't exist.")
                     return None
             return len(self.all())
-

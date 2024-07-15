@@ -84,12 +84,14 @@ class DBStorage:
             if cls in classes:
                 cls = classes[cls]
             else:
+                print ("Class doesn't exist.")
                 return None
-        
+
         obj_search = self.all(cls).values()
         for obj in obj_search:
             if obj.id == id:
                 return obj
+
         return None
 
     def count(self, cls=None):
@@ -102,5 +104,6 @@ class DBStorage:
                 if cls in classes:
                     return len(self.all(cls))
                 else:
+                    print ("Class doesn't exist.")
                     return None
             return len(self.all())

@@ -37,7 +37,7 @@ def del_state(state_id):
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def post_state():
     """Creates a State: POST /api/v1/states"""
-    new_state = request.get_json()
+    new_state = request.get_json(silent=True)
     if not request.is_json:
         return jsonify({"error": "Not a JSON"}), 400
     if "name" not in new_state:
@@ -56,7 +56,7 @@ def put_state(state_id):
     if not state:
         abort(404)
 
-    body_req = request.get_json()
+    body_req = request.get_json(silent=True)
     if not request.is_json:
         return jsonify({"error": "Not a JSON"}), 400
 

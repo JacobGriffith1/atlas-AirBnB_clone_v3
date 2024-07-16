@@ -38,8 +38,8 @@ def del_state(state_id):
 def post_state():
     """Creates a State: POST /api/v1/states"""
     new_state = request.get_json()
-    if not new_state:
-        abort(400, 'Not a JSON')
+    if not request.is_json:
+        abort(400, "Not a JSON")
     if "name" not in new_state:
         abort(400, 'Missing name')
     state = State(**new_state)
@@ -57,7 +57,7 @@ def put_state(state_id):
         abort(404)
 
     body_req = request.get_json()
-    if not body_req:
+    if not request.is_json:
         abort(400, 'Not a JSON')
 
     for key, val in body_req.items():

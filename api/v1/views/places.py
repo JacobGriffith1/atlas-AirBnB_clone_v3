@@ -5,6 +5,7 @@ from flask import jsonify, make_response, abort, request
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False,
@@ -35,7 +36,7 @@ def get_place(place_id):
 @app_views.route('/places/<place_id>', strict_slashes=False,
                  methods=['DELETE'])
 def del_place(place_id):
-    """Deletes a Place object:: DELETE /api/v1/places/<place_id>"""
+    """Deletes a Place object: DELETE /api/v1/places/<place_id>"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -56,7 +57,7 @@ def post_place(city_id):
         abort(400, "Not a JSON")
     if "user_id" not in new_place:
         abort(400, "Missing user_id")
-    user = storage.get(Place, new_place["user_id"])
+    user = storage.get(User, new_place["user_id"])
     if not user:
         abort(404)
     if "name" not in new_place:

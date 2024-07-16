@@ -117,9 +117,36 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test that gets an object"""
-        self.assertEqual(type(models.storage.all()), list)
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        test_dict = {}
+        for key, val in classes.items():
+            with self.subTest(key=key, val=val):
+                obj = val()
+                obj_key = obj.__class__.__name__ + "." + obj.id
+                storage.new(obj)
+                test_dict[obj_key] = obj
+                self.assertEqual(1, storage.count(val))
+        FileStorage._FileStorage__objects = save
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """Test that counts objects"""
-        self.assertEqual(type(models.storage.all()), list)
+        storage = FileStorage()
+        test_dict = {}
+
+        for key, val in classes.items():
+            obj = val()
+            obj_key = obj.__class__.__name__ + "." + obj.id
+            test_dict[obj_key] = obj
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = test_dict
+        storage.save()
+        FileStorage._FileStorage__objects = save
+        for key, val in test_dict.items():
+            test_dict[key] = val.to_dict()
+        jdump = json.dumps(test_dict)
+        with open("file.json", "r") as file:
+            jread = file.read()
+        self.assertEqual(json.loads(jdump), json.loads(jread))

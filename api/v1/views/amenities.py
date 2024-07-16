@@ -13,7 +13,8 @@ def amenities():
     return jsonify([amenity.to_dict() for amenity in all_amenities.values()])
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['GET'])
 def get_amenity(amenity_id):
     """Retrieves an Amenity object: GET /api/v1/amenities/<amenity_id>"""
     amenity = storage.get(Amenity, amenity_id)

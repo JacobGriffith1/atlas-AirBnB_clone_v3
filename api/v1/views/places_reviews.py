@@ -18,7 +18,7 @@ def get_reviews_by_place(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    
+
     reviews = place.reviews
     reviews_dict = [review.to_dict() for review in reviews]
     return jsonify(reviews_dict)

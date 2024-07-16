@@ -71,7 +71,7 @@ def post_place(city_id):
                  methods=['PUT'])
 def put_place(place_id):
     """Updates a Place object: PUT /api/v1/places/<place_id>"""
-    place = storage.get(place, place_id)
+    place = storage.get(Place, place_id)
     if not place:
         abort(404)
 

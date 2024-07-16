@@ -60,7 +60,7 @@ def post_place(city_id):
     if not user:
         abort(404)
     if "name" not in new_place:
-        abort(400, "Missing password")
+        abort(400, "Missing name")
     place = Place(**new_place, city_id=city_id)
     storage.new(place)
     storage.save()

@@ -9,7 +9,7 @@ from models.city import City
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
 def get_place_by_city(city_id):
-    """Retrieves the list of all Place objects of a City: GET /api/v1/amentities"""
+    """Retrieves the list of all Place objects of a City: GET /api/v1/cities/<city_id>/places"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -41,7 +41,7 @@ def del_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
 def post_place(city_id):
-    """Creates a Place object: POST /api/v1/places"""
+    """Creates a Place object: POST /api/v1/cities/<city_id>/places"""
     new_place = request.get_json()
     city = storage.get(City, city_id)
     if not city:

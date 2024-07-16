@@ -36,8 +36,8 @@ def del_user(user_id):
 @app_views.route('/users', strict_slashes=False, methods=['POST'])
 def post_user():
     """Creates a User: POST /api/v1/users"""
-    new_user = request.get_json()
-    if not new_user:
+    new_user = request.get_json(silent=True)
+    if not request.is_json:
         abort(400, "Not a JSON")
     if "email" not in new_user:
         abort(400, "Missing email")
@@ -57,8 +57,8 @@ def put_user(user_id):
     if not user:
         abort(404)
 
-    body_req = request.get_json()
-    if not body_req:
+    body_req = request.get_json(silent=True)
+    if not request.is_json:
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():

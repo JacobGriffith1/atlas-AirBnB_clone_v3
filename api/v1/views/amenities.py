@@ -37,8 +37,8 @@ def del_amenity(amenity_id):
 @app_views.route('/amenities', strict_slashes=False, methods=['POST'])
 def post_amenity():
     """Creates an Amenity: POST /api/v1/amenities"""
-    new_amenity = request.get_json()
-    if not new_amenity:
+    new_amenity = request.get_json(silent=True)
+    if not request.is_json:
         abort(400, "Not a JSON")
     if "name" not in new_amenity:
         abort(400, "Missing name")
@@ -57,7 +57,7 @@ def put_amenity(amenity_id):
         abort(404)
 
     body_req = request.get_json()
-    if not body_req:
+    if not request.is_json:
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():

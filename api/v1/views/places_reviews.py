@@ -42,11 +42,11 @@ def del_review(review_id):
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['POST'])
 def post_review(place_id):
     """Creates a Review object: POST /api/v1/places/<place_id>/reviews"""
-    new_review = request.get_json()
+    new_review = request.get_json(silent=True)
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    if not new_review:
+    if not request.is_json:
         abort(400, "Not a JSON")
     if "user_id" not in new_review:
         abort(400, "Missing user_id")
@@ -69,8 +69,8 @@ def put_review(review_id):
     if not review:
         abort(404)
 
-    body_req = request.get_json()
-    if not body_req:
+    body_req = request.get_json(silent=True)
+    if not request.is_json:
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():

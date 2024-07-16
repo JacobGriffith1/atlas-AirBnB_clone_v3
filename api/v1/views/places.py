@@ -42,11 +42,11 @@ def del_place(place_id):
 @app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
 def post_place(city_id):
     """Creates a Place object: POST /api/v1/cities/<city_id>/places"""
-    new_place = request.get_json()
+    new_place = request.get_json(silent=True)
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    if not new_place:
+    if not request.is_json:
         abort(400, "Not a JSON")
     if "user_id" not in new_place:
         abort(400, "Missing user_id")
@@ -69,8 +69,8 @@ def put_place(place_id):
     if not place:
         abort(404)
 
-    body_req = request.get_json()
-    if not body_req:
+    body_req = request.get_json(silent=True)
+    if not request.is_json:
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():

@@ -44,11 +44,11 @@ def del_city(city_id):
 @app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
 def post_city(state_id):
     """Creates a City: POST /api/v1/cities"""
-    new_city = request.get_json()
+    new_city = request.get_json(silent=True)
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    if not new_city:
+    if not request.is_json:
         abort(400, "Not a JSON")
     if "name" not in new_city:
         abort(400, "Missing name")
@@ -66,8 +66,8 @@ def put_city(city_id):
     if not city:
         abort(404)
 
-    body_req = request.get_json()
-    if not body_req:
+    body_req = request.get_json(silent=True)
+    if not request.is_json:
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():

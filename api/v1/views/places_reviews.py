@@ -5,6 +5,7 @@ from flask import jsonify, make_response, abort, request
 from models import storage
 from models.place import Place
 from models.review import Review
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['GET'])
@@ -15,7 +16,7 @@ def get_reviews_by_place(place_id):
         abort(404)
     
     reviews = place.reviews
-    reviews_dict = [review.to_dict() for review in reviews ]
+    reviews_dict = [review.to_dict() for review in reviews]
     return jsonify(reviews_dict)
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['GET'])
@@ -50,7 +51,7 @@ def post_review(place_id):
         abort(400, "Not a JSON")
     if "user_id" not in new_review:
         abort(400, "Missing user_id")
-    user = storage.get(Review, new_review["user_id"])
+    user = storage.get(User, new_review["user_id"])
     if not user:
         abort(404)
     if "text" not in new_review:

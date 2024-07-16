@@ -39,9 +39,9 @@ def post_state():
     """Creates a State: POST /api/v1/states"""
     new_state = request.get_json()
     if not request.is_json:
-        abort(400, "Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
     if "name" not in new_state:
-        abort(400, 'Missing name')
+        return jsonify({"error": "Missing name"}), 400
     state = State(**new_state)
     storage.new(state)
     storage.save()
@@ -58,7 +58,7 @@ def put_state(state_id):
 
     body_req = request.get_json()
     if not request.is_json:
-        abort(400, 'Not a JSON')
+        return jsonify({"error": "Not a JSON"}), 400
 
     for key, val in body_req.items():
         if key != 'id' and key != 'created_at' and key != 'updated_at':

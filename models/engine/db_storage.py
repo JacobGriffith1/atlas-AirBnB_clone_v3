@@ -12,7 +12,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -21,7 +20,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -80,12 +79,8 @@ class DBStorage:
         Returns the object based on the class
         and its ID, or None if not found
         """
-        if isinstance(cls, str):
-            if cls in classes:
-                cls = classes[cls]
-            else:
-                print ("Class doesn't exist.")
-                return None
+        if cls not in classes.values():
+            return None
 
         obj_search = self.all(cls).values()
         for obj in obj_search:

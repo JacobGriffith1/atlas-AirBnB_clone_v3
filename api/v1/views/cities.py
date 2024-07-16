@@ -77,7 +77,7 @@ def put_city(city_id):
 
     for key, val in body_req.items():
         if (key != 'id' and key != 'state_id' and key != 'created_at'
-            and key != 'updated_at'):
+                and key != 'updated_at'):
             setattr(city, key, val)
 
     storage.save()

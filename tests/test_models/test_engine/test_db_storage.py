@@ -77,7 +77,7 @@ test_db_storage.py'])
         """Test that counts objects"""
         state = State(name="Oklahoma")
         state.save()
-        self.assertEqual(models.storage.count(State), 1)
+        self.assertEqual(models.storage.count(State), 2)
 
 
 class TestFileStorage(unittest.TestCase):

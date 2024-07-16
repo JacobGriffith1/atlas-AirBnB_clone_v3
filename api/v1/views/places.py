@@ -61,8 +61,7 @@ def post_place(city_id):
         abort(404)
     if "name" not in new_place:
         abort(400, "Missing password")
-    new_place['city_id'] = city_id
-    place = Place(**new_place)
+    place = Place(**new_place, city_id=city_id)
     storage.new(place)
     storage.save()
     return make_response(jsonify(place.to_dict()), 201)

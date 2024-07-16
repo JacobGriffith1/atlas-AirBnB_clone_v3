@@ -26,7 +26,7 @@ def get_state(state_id):
                  methods=['DELETE'])
 def del_state(state_id):
     """Deletes a State object:: DELETE /api/v1/states/<state_id>"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
     state.delete()
@@ -52,7 +52,7 @@ def post_state():
                  methods=['PUT'])
 def put_state(state_id):
     """Updates a State object: PUT /api/v1/states/<state_id>"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
 

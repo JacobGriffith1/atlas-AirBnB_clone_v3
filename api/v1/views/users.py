@@ -62,7 +62,8 @@ def put_user(user_id):
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():
-        if key != 'id' and key != 'email' and key != 'created_at' and key != 'updated_at':
+        if (key != 'id' and key != 'email' and key != 'created_at'
+                and key != 'updated_at'):
             setattr(user, key, val)
 
     storage.save()

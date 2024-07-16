@@ -29,7 +29,7 @@ def get_review(review_id):
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['DELETE'])
-def del_place(review_id):
+def del_review(review_id):
     """Deletes a Review object:: DELETE /api/v1/reviews/<review_id>"""
     review = storage.get(Review, review_id)
     if not review:
@@ -40,7 +40,7 @@ def del_place(review_id):
 
 
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['POST'])
-def post_place(place_id):
+def post_review(place_id):
     """Creates a Review object: POST /api/v1/places/<place_id>/reviews"""
     new_review = request.get_json()
     place = storage.get(Place, place_id)
@@ -63,7 +63,7 @@ def post_place(place_id):
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['PUT'])
-def put_place(review_id):
+def put_review(review_id):
     """Updates a Review object: PUT /api/v1/reviews/<review_id>"""
     review = storage.get(Review, review_id)
     if not review:

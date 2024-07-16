@@ -17,8 +17,10 @@ def states():
 def get_state(state_id):
     """Retrieves a State object: GET /api/v1/states/<state_id>"""
     state = storage.get("State", state_id)
-    if not state:
-        abort(404)
+    print(state)
+    print("This should be a particular Instance")
+    #if not state:
+        #abort(404)
     return jsonify(state.to_dict())
 
 

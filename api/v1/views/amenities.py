@@ -57,7 +57,7 @@ def put_amenity(amenity_id):
     if not amenity:
         abort(404)
 
-    body_req = request.get_json()
+    body_req = request.get_json(silent=True)
     if not request.is_json:
         abort(400, "Not a JSON")
 

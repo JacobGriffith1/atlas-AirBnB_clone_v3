@@ -7,9 +7,13 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['GET'])
+@app_views.route('/states/<state_id>/cities', strict_slashes=False,
+                 methods=['GET'])
 def get_cities_by_state(state_id):
-    """Retrieves the list of all City objects of a State: GET /api/v1/states/<state_id>/cities"""
+    """
+    Retrieves the list of all City objects of a State:
+    GET /api/v1/states/<state_id>/cities
+    """
     state = storage.get(State, state_id)
 
     if not state:
@@ -41,7 +45,8 @@ def del_city(city_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
+@app_views.route('/states/<state_id>/cities', strict_slashes=False,
+                 methods=['POST'])
 def post_city(state_id):
     """Creates a City: POST /api/v1/cities"""
     new_city = request.get_json(silent=True)
@@ -71,7 +76,8 @@ def put_city(city_id):
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():
-        if key != 'id' and key != 'state_id' and key != 'created_at' and key != 'updated_at':
+        if (key != 'id' and key != 'state_id' and key != 'created_at'
+            and key != 'updated_at'):
             setattr(city, key, val)
 
     storage.save()

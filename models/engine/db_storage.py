@@ -97,7 +97,7 @@ class DBStorage:
         """
         count = 0
 
-        if not cls:
+        if cls is None:
             return len(self.all())
 
         if cls in classes:

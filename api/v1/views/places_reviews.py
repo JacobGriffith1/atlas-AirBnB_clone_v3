@@ -8,9 +8,13 @@ from models.review import Review
 from models.user import User
 
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['GET'])
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
+                 methods=['GET'])
 def get_reviews_by_place(place_id):
-    """Retrieves the list of all Review objects of a Place: GET /api/v1/places/<place_id>/reviews"""
+    """
+    Retrieves the list of all Review objects of a Place:
+    GET /api/v1/places/<place_id>/reviews
+    """
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -19,7 +23,9 @@ def get_reviews_by_place(place_id):
     reviews_dict = [review.to_dict() for review in reviews]
     return jsonify(reviews_dict)
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['GET'])
+
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
+                 methods=['GET'])
 def get_review(review_id):
     """Retrieves a Review object: GET /api/v1/reviews/<review_id>"""
     review = storage.get(Review, review_id)
@@ -40,7 +46,8 @@ def del_review(review_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['POST'])
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
+                 methods=['POST'])
 def post_review(place_id):
     """Creates a Review object: POST /api/v1/places/<place_id>/reviews"""
     new_review = request.get_json(silent=True)
@@ -75,7 +82,8 @@ def put_review(review_id):
         abort(400, "Not a JSON")
 
     for key, val in body_req.items():
-        if key != 'id' and key != 'user_id' and key != 'place_id' and key != 'created_at' and key != 'updated_at':
+        if (key != 'id' and key != 'user_id' and key != 'place_id'
+                and key != 'created_at' and key != 'updated_at'):
             setattr(review, key, val)
 
     storage.save()

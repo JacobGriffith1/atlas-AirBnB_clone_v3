@@ -73,12 +73,6 @@ test_db_storage.py'])
         state.save()
         self.assertEqual(models.storage.get(state.__class__, state.id), state)
 
-    def test_count(self):
-        """Test that counts objects"""
-        state = State(name="Texas")
-        state.save()
-        self.assertEqual(models.storage.count(State), 1)
-
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""

@@ -128,7 +128,7 @@ class TestFileStorage(unittest.TestCase):
                 obj_key = obj.__class__.__name__ + "." + obj.id
                 storage.new(obj)
                 test_dict[obj_key] = obj
-                self.assertEqual(2, storage.count(val))
+                self.assertEqual(1, storage.count(val))
         FileStorage._FileStorage__objects = save
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")

@@ -76,7 +76,7 @@ test_db_storage.py'])
 
     def test_count(self):
         """Test that counts objects"""
-        storage = FileStorage(State)
+        storage = FileStorage()
         states = storage.all(State)
         c = not None
         self.assertEqual(storage.count(states), c)

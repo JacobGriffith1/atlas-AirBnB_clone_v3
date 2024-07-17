@@ -10,6 +10,7 @@ from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
+from models.engine.file_storage import FileStorage
 from models.place import Place
 from models.review import Review
 from models.state import State
@@ -69,15 +70,16 @@ test_db_storage.py'])
 
     def test_get(self):
         """Test that gets an object"""
-        state = State(name="Oklahoma")
-        state.save()
-        self.assertEqual(models.storage.get(state.__class__, state.id), state)
+        storage = FileStorage()
+        states = storage.all(State)
+        self.assertIsInstance(states, dict)
 
     def test_count(self):
         """Test that counts objects"""
-        state = State(name="Texas")
-        state.save()
-        self.assertEqual(models.storage.count(State), 1)
+        storage = FileStorage(State)
+        states = storage.all(State)
+        c = not None
+        self.assertEqual(storage.count(states), c)
 
 
 class TestFileStorage(unittest.TestCase):

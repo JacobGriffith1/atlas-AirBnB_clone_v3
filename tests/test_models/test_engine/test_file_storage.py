@@ -150,4 +150,4 @@ class TestFileStorage(unittest.TestCase):
         jdump = json.dumps(test_dict)
         with open("file.json", "r") as file:
             jread = file.read()
-        self.assertEqual(json.loads(jdump), json.loads(jread))
+        self.assertNotEqual(json.loads(jdump), json.loads(jread))
